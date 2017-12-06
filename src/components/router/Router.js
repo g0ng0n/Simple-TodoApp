@@ -6,6 +6,7 @@ const getCurrentPath = () => {
 }
 
 export class Router extends Component {
+
   state = {
     route: getCurrentPath()
   }
@@ -24,6 +25,11 @@ export class Router extends Component {
     return {
       route: this.state.route,
       linkHandler: this.handleLinkClick,
+    }
+  }
+  componentDidMout() {
+    window.onpopstate = () => {
+      this.setState({route: getCurrentPath()})
     }
   }
   render(){

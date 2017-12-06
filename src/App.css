@@ -59,7 +59,11 @@ li:hover span.delete-item {
 }
 
 .error {
-  color:red;
+  color: red;
+}
+
+.success {
+  color: green;
 }
 
 .Footer a {
