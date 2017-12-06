@@ -6,29 +6,23 @@ import { addTodo, generateId } from './lib/todoHelpers';
 
 class App extends Component {
 
-  constructor() {
-    super();
-    this.state = {
-      todos: [
-        {id: 1, name: 'Learn JSX', isComplete: true},
-        {id: 2, name: 'Build an Awesome App', isComplete: flase},
-        {id: 3, name: 'Ship It!', isComplete: flase},
-      ],
-      currentTodo: '',
-    }
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleEmptySubmit = this.handleEmptySubmit.bind(this);
+  state = {
+    todos: [
+      {id: 1, name: 'Learn JSX', isComplete: true},
+      {id: 2, name: 'Build an Awesome App', isComplete: flase},
+      {id: 3, name: 'Ship It!', isComplete: flase},
+    ],
+    currentTodo: '',
   }
 
-  handleEmptySubmit(event){
+  handleEmptySubmit = (event) => {
     event.preventDefault();
     this.setState({
       errorMessage: 'Please supply a todo Name'
     })
   }
 
-  handleSubmit(event){
+  handleSubmit = (event) => {
     event.preventDefault();
     const newId = generateId();
     const newTodo = {name: this.state.currentTodo, isComplete: false, id: newId }
@@ -40,7 +34,7 @@ class App extends Component {
     })
   }
 
-  handleInputChange (event){
+  handleInputChange = (event) => {
     this.setState({
       currentTodo: event.target.value,
     })
