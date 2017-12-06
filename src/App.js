@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {TodoForm, TodoList} from './components/todo';
-import { addTodo, generateId } from './lib/todoHelpers';
+import {TodoForm, TodoList, Footer} from './components/todo';
+import { addTodo, generateId, findById, toogleTodo, updateTodo, removeTodo } from './lib/todoHelpers';
+import { pipe, partial } fromm './lib/utils'
 
 class App extends Component {
 
@@ -20,6 +21,18 @@ class App extends Component {
     this.setState({
       errorMessage: 'Please supply a todo Name'
     })
+  }
+
+  handleToogle = (id) => {
+    const getUpdatedTodos = pipe(findById, toogleTodo, partial(updateTodo, this.state.todos))
+    const updatedTodo = getUpdatedTodos(id, this.state.todos)
+    this.setState({todos: updatedTodo})
+  }
+
+  handleRemove = (id, event) => {
+    event.preventDefault();
+    const updatedTodos = removeTodo(this.state.todos, id)
+    this.setState({todos: updatedTodos})
   }
 
   handleSubmit = (event) => {
@@ -53,7 +66,11 @@ class App extends Component {
           <TodoForm handleInputChange={this.handleInputChange}
                     currentTodo={this.state.currentTodo}
                     handleSubmit={this.submitHandler}/>
-          <TodoList todos={this.state.todos}/>
+          <TodoList
+            handleRemove={this.handleRemove}
+            handleToogle={this.handleToogle}
+            todos={this.state.todos}/>
+            <Footer />
         </div>
       </div>
     );
